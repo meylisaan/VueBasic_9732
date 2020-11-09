@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas UGD</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="vue.js"></script>
+</head>
+<body class="bg-info">
+    <div id="app">
+        <div class="col-4 justify-content-center mx-auto h-100" style="overflow-y: auto;max-height: 370px;">
+            <div v-for="(todo,index) in todos" :key="index">
+                <div class="card my-2">
+                    <div class="card-body">
+                        <span class="float-right"><button class="btn btn-sm" @click="hapus(index)">x</button></span>
+                        <span v-if="todo.prior == 'penting'" class="badge badge-light text-danger">{{ todo.prior }}</span>
+                        <span v-else-if="todo.prior == 'biasa'" class="badge badge-light text-primary">{{ todo.prior }}</span>
+                        <span v-else-if="todo.prior == 'tidak penting'" class="badge badge-light text-success">{{ todo.prior }}</span>
+                        <br>
+                        <h4>{{ todo.judul }}</h4>
+                        <p>{{ todo.note }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 justify-content-center mx-auto mt-4">
+            <div class="card p-4">
+                <div class="form-group">
+                    <label for="judul"><strong>Apa yang kamu kerjakan ?</strong> </label>
+                    <input type="text"  class="form-control" id="judul" >
+                </div>
+                <div class="form-group">
+                    <label for="prior"><strong>Penting tidak ?</strong> </label>
+                    <select name="prior"  id="prior" class="form-control">
+                        <option value="penting">penting</option>
+                        <option value="biasa">biasa</option>
+                        <option value="tidak penting">tidak penting</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="note"><strong>ada catatan ?</strong> </label>
+                    <textarea class="form-control" id="note"></textarea>
+                </div>
+                <div>
+                    <button class="btn btn-dark" @click="reset">Reset</button>
+                    <button class="btn btn-primary" @click="save">Simpan</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <footer class="text-center">
+            <p>
+                {{meylisa.nama}} | {{meylisa.npm}} | {{meylisa.kelas}}
+            </p>
+        </footer>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            todos:[
+                
+            ],
+            meylisa: {
+              nama: 'Meylisa Anditya Pratiwi',
+              npm: 180709732,
+              kelas: 'kelas PAW C'
+          },
+        },
+        methods: {
+            save() {
+                let note = document.getElementById('note');
+                let judul = document.getElementById('judul');
+                let prior = document.getElementById('prior');
+                
+                let todo = {
+                    judul : judul.value,
+                    prior : prior.value,
+                    note : note.value,
+                }
+                document.getElementById('note').value="";
+                document.getElementById('judul').value="";
+                document.getElementById('prior').value="";
+                this.todos.push(todo);
+                console.log(this.todos);
+            },
+            reset(){
+                document.getElementById('note').value="";
+                document.getElementById('judul').value="";
+                document.getElementById('prior').value="";
+            },
+            hapus(index){
+                this.todos.splice(index,1);
+            },
+        },
+    });
+</script>
+</html>
+<style>
+       .text-center{
+           background: #CCFFFF;
+           padding: 25px;
+       }
+
+       .form-group
+       {
+           background: #7FFFFF;
+       }
+
+       .card-body
+       {
+           background: #66FFFF;
+       }
+
+       .btn .btn-dark
+       {
+           background: #003366;
+       }
+</style>
